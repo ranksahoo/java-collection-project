@@ -1,8 +1,14 @@
 package com.example;
 
-public class Room {
+import java.util.Comparator;
 
-	private String name;
+public class Room implements Comparable<Room> {
+
+	public static Comparator<Room> RATE_COMPARATOR = Comparator.comparing(Room::getRate)
+			.thenComparing(Room::getName)
+			.thenComparing(Room::getType);
+	
+			private String name;
 
 	private String type;
 
@@ -101,4 +107,9 @@ public class Room {
 		return "Room [name=" + name + ", type=" + type + ", capacity=" + capacity + ", rate=" + rate + ", petFriendly=" + petFriendly + "]";
 	}
 
+	@Override
+	public int compareTo(Room other) {
+		int result = this.getName().compareTo(other.getName());
+		return result != 0 ? result : this.getType().compareTo(other.getType());
+	}
 }
